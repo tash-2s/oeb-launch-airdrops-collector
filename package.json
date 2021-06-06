@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "lint": "prettier --write './*.ts'",
+    "check-ts": "tsc -p . --noEmit"
+  },
   "dependencies": {
     "@polkadot/api": "4.12.1",
     "arg": "5.0.0",
