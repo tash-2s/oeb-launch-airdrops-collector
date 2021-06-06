@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@polkadot/api": "4.12.1",
+    "arg": "5.0.0",
+    "rmrk-tools": "0.1.22"
+  }
+}
