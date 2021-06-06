@@ -3,7 +3,9 @@ import { encodeAddress } from "@polkadot/util-crypto";
 import { hexToString } from "@polkadot/util";
 
 const main = () => {
-  const dump = JSON.parse(readFileSync("./tmp-dump.json", "utf8"));
+  const dump = JSON.parse(
+    readFileSync("./remarks-7678801-7794000-OEB.json", "utf8")
+  );
 
   console.log(`dump size: ${dump.length}`);
 
@@ -16,7 +18,7 @@ const main = () => {
         throw new Error(`invalid dump: ${call.call}`);
       }
 
-      const [prefix, body] = hexToString(call.value).split(":");
+      const [prefix, body] = hexToString(call.value).split("::");
 
       if (prefix !== "OEB") {
         throw new Error(`invalid prefix: ${prefix}`);
@@ -31,7 +33,7 @@ const main = () => {
         continue;
       }
 
-      throw new Error(`unhandled body: ${body}`);
+      throw new Error(`unhandled body: ${body} (from: ${call.caller})`);
     }
   }
 
