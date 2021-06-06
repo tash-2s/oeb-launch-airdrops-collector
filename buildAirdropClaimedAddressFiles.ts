@@ -7,10 +7,17 @@ const main = () => {
     readFileSync("./remarks-7678801-7794000-OEB.json", "utf8")
   );
 
-  console.log(`dump size: ${dump.length}`);
+  console.log(
+    `dump size: ${dump.length}, call size: ${dump.reduce(
+      (acc: any, cur: any) => acc + cur.calls.length,
+      0
+    )}`
+  );
 
   const rmrkAddresses = new Set<string>();
   const uniqueAddresses = new Set<string>();
+
+  let dupCount = 0;
 
   for (const block of dump) {
     for (const call of block.calls) {
@@ -25,10 +32,18 @@ const main = () => {
       }
 
       if ("RMRKAIRDROP" === body) {
+        if (rmrkAddresses.has(call.caller)) {
+          dupCount++;
+          // console.log(`rmrk dup: ${call.caller}`);
+        }
         rmrkAddresses.add(call.caller);
         continue;
       }
       if ("UNIQUEAIRDROP" === body) {
+        if (uniqueAddresses.has(call.caller)) {
+          dupCount++;
+          // console.log(`unique dup: ${call.caller}`);
+        }
         uniqueAddresses.add(call.caller);
         continue;
       }
@@ -37,7 +52,9 @@ const main = () => {
     }
   }
 
-  console.log(`rmrk: ${rmrkAddresses.size}, unique: ${uniqueAddresses.size}`);
+  console.log(
+    `rmrk: ${rmrkAddresses.size}, unique: ${uniqueAddresses.size}, dup: ${dupCount}`
+  );
 
   const rmrkAddressesArray = Array.from(rmrkAddresses);
   const uniqueAddressesArray = Array.from(uniqueAddresses);
