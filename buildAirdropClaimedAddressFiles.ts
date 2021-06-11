@@ -4,7 +4,7 @@ import { hexToString } from "@polkadot/util";
 
 const main = () => {
   const dump = JSON.parse(
-    readFileSync("./remarks-7678801-7794000-OEB.json", "utf8")
+    readFileSync("./remarks-7678801-7865000-OEB.json", "utf8")
   );
 
   console.log(
